@@ -12,6 +12,6 @@ public class LevelGenerator : MonoBehaviour
         LevelPiece levelPiece = levelPieceGO.GetComponent<LevelPiece>();
 
         //Place first object    
-        levelPiece.PlaceLevelPiece(Vector2Int.one);
+        levelPiece.PlaceLevelPiece(Vector2Int.zero, 0);
     }
 }

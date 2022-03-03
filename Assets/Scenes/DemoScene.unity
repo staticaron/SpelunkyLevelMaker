@@ -236,11 +236,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdad7bc8aa09a74e86860db9afeb3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridWidth: 4
-  _gridHeight: 4
-  _levelPieceWidth: 5
-  _levelPieceHeight: 5
-  _levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
+  gridWidth: 4
+  gridHeight: 4
+  levelPieceWidth: 5
+  levelPieceHeight: 5
+  levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
 --- !u!4 &1389832444
 Transform:
   m_ObjectHideFlags: 0
@@ -267,5 +267,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424954bdcd287304e99745d8c521c3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelGrid: {fileID: 1389832443}
-  _levelPieceTemplate: {fileID: 694290914733082058, guid: a4e6b0bf197ac244f97b210d656a37a4, type: 3}
+  levelGrid: {fileID: 1389832443}
+  levelPieceTemplate: {fileID: 694290914733082058, guid: a4e6b0bf197ac244f97b210d656a37a4, type: 3}

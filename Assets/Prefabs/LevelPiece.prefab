@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: LevelPiece
   m_TagString: Untagged
-  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052a81e5b29fa464390eba1a6ffd4ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
+  levelPieceTemplate: {fileID: 694290914733082058}
+  levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
 --- !u!1 &694290915297908210
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +71,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694290915297908210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 2.5, z: 0}
+  m_LocalPosition: {x: 2.5, y: -2.5, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 694290914733082059}

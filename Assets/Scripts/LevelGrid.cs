@@ -21,22 +21,24 @@ public class LevelGrid : MonoBehaviour
     {
         levelGridChannelSO.EGetPositionFromGridCoordinates += GetPositionFromGridCoordinate;
         levelGridChannelSO.EUpdateLevelGrid += UpdateLevelGrid;
+        levelGridChannelSO.EGetValueAtGridCoordinate += GetValueAtCoordinates;
     }
 
     private void OnDisable()
     {
         levelGridChannelSO.EGetPositionFromGridCoordinates -= GetPositionFromGridCoordinate;
         levelGridChannelSO.EUpdateLevelGrid -= UpdateLevelGrid;
+        levelGridChannelSO.EGetValueAtGridCoordinate -= GetValueAtCoordinates;
     }
 
     [ContextMenu("Print Grid")]
     private void PrintGrid()
     {
-        for (int row = 0; row < grid.GetLength(0); row++)
+        for (int col = 0; col < grid.GetLength(1); col++)
         {
             string rowString = "";
 
-            for (int col = 0; col < grid.GetLength(1); col++)
+            for (int row = 0; row < grid.GetLength(0); row++)
             {
                 rowString += grid[row, col].ToString();
             }
@@ -47,12 +49,22 @@ public class LevelGrid : MonoBehaviour
 
     public Vector2 GetPositionFromGridCoordinate(Vector2Int coordinates)
     {
-        var postition = (Vector2)transform.position + new Vector2(coordinates.x * levelPieceWidth, coordinates.y * levelPieceHeight);
+        var postition = (Vector2)transform.position + new Vector2(coordinates.x * levelPieceWidth, -1 * coordinates.y * levelPieceHeight);
         return postition;
     }
 
     private void UpdateLevelGrid(Vector2Int coordinates, int value)
     {
         grid[coordinates.x, coordinates.y] = value;
+    }
+
+    private int GetValueAtCoordinates(Vector2Int coordinates)
+    {
+        if (coordinates.x < 0 || coordinates.y < 0 || coordinates.x >= gridWidth || coordinates.y >= gridHeight)
+        {
+            return -1;
+        }
+
+        return grid[coordinates.x, coordinates.y];
     }
 }
