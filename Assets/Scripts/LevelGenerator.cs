@@ -5,6 +5,11 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] LevelGrid levelGrid;
     [SerializeField] GameObject levelPieceTemplate;
 
+    private void Start()
+    {
+        GenerateLevel();
+    }
+
     [ContextMenu("Generate Level")]
     private void GenerateLevel()
     {
