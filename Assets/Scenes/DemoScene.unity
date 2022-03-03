@@ -268,4 +268,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelGrid: {fileID: 1389832443}
-  levelPieceTemplate: {fileID: 694290914733082058, guid: a4e6b0bf197ac244f97b210d656a37a4, type: 3}
+  levelPieceTemplate: {fileID: 694290914733082058, guid: daf8a670d47bff749b3ae2207d699028, type: 3}
