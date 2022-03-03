@@ -11,10 +11,10 @@ struct SurroudingData
     {
         Vector2Int direction = Vector2Int.zero;
 
+        int rand = Random.Range(0, 3);
+
         while (direction == Vector2Int.zero)
         {
-            int rand = Random.Range(0, 3);
-
             //Debug.Log($"Loop is running with rand = {rand} and directions = {up} {down} {left} {right}");
 
             if (rand == 0 && down == false)
@@ -35,6 +35,7 @@ struct SurroudingData
             else
             {
                 Debug.Log("Checking Other possibilities");
+                rand = (rand + 1) % 3;
                 continue;
             }
         }
