@@ -91,9 +91,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 694290914733082059}
-  - component: {fileID: 4702845902044526186}
   m_Layer: 0
-  m_Name: LevelPiece_UD_3
+  m_Name: LevelPiece_UD_4
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -129,20 +128,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4702845902044526186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 694290914733082058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 052a81e5b29fa464390eba1a6ffd4ee0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelPieceTemplate: {fileID: 694290914733082058}
-  levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
 --- !u!1 &1535510051780163951
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052a81e5b29fa464390eba1a6ffd4ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelPieceTemplate: {fileID: 694290914733082058, guid: 1824f6c5770162a4b83776fad8a41398, type: 3}
-  coordinate: {x: 0, y: 0}
+  levelPieceTemplate: {fileID: 694290914733082058}
   levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
   piecePoolerChannelSO: {fileID: 11400000, guid: 231d05e482ad45a4b8d549b89492264f, type: 2}
