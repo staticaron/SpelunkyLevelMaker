@@ -123,6 +123,91 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &433629257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 433629258}
+  - component: {fileID: 433629259}
+  m_Layer: 0
+  m_Name: LevelPiecePooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &433629258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433629257}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &433629259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433629257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a6240b816643a4fac9c54fc6d78a73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelPieces_LR:
+  - {fileID: 694290914733082058, guid: ea8148866c4435148ba1c81c3cb3b293, type: 3}
+  - {fileID: 694290914733082058, guid: a4e6b0bf197ac244f97b210d656a37a4, type: 3}
+  - {fileID: 694290914733082058, guid: bc62d5081023d9e4eb514b6e8fdfc1c8, type: 3}
+  - {fileID: 694290914733082058, guid: f38360b9239d41f4e8e5e1b4f8821cb9, type: 3}
+  LevelPieces_LD:
+  - {fileID: 694290914733082058, guid: e5fab9898fe50574b98226bd144f5e1d, type: 3}
+  - {fileID: 694290914733082058, guid: 7cbc9e63a2e53754287c12d7ae663350, type: 3}
+  - {fileID: 694290914733082058, guid: 2989f62cff8158d4390fa33fb64ec1bf, type: 3}
+  - {fileID: 694290914733082058, guid: aae22441bae5abd47927c8f75e61a629, type: 3}
+  LevelPieces_RD:
+  - {fileID: 694290914733082058, guid: 33ceb85546a665245822a9f9336e58be, type: 3}
+  - {fileID: 694290914733082058, guid: 502ecc0d96c24ae4f9ef4a7c2bab573b, type: 3}
+  - {fileID: 694290914733082058, guid: 99de31a96cd389c45b5b047dc7c75172, type: 3}
+  - {fileID: 694290914733082058, guid: 08b27f9103ad6f349932384a3af418f1, type: 3}
+  LevelPieces_UL:
+  - {fileID: 694290914733082058, guid: 8f55705eda2015f4f8ac9044f8c48643, type: 3}
+  - {fileID: 694290914733082058, guid: e5be95d03cd2e2449b3cc8c6f8df29e8, type: 3}
+  - {fileID: 694290914733082058, guid: 78b17b77cf20e294aba307227c79fbc7, type: 3}
+  - {fileID: 694290914733082058, guid: aa38946237a1d3e4c8bd31b46e8de96b, type: 3}
+  LevelPieces_UR:
+  - {fileID: 694290914733082058, guid: bc46d72e5920d4a4ab04aa426898f78e, type: 3}
+  - {fileID: 694290914733082058, guid: 7f555c611d7e5b84a888768daf049108, type: 3}
+  - {fileID: 694290914733082058, guid: 3c6fbbf787982c04b851f1651782ec55, type: 3}
+  - {fileID: 694290914733082058, guid: 19853b65e1ed82b4b9e2831e4a59c589, type: 3}
+  LevelPieces_UD:
+  - {fileID: 694290914733082058, guid: f73c3ab88a6685548b5f13e2a602a1b3, type: 3}
+  - {fileID: 694290914733082058, guid: 9db84491bf2e0a94dbcd35bf204d9ee2, type: 3}
+  - {fileID: 694290914733082058, guid: 2390cda2f90a79f4c8cedee0a359795a, type: 3}
+  - {fileID: 694290914733082058, guid: 7fc8d1e07a0ed994faeb04df6d387919, type: 3}
+  - {fileID: 694290914733082058, guid: 18d8be95e99c68b48aadbf86f1997877, type: 3}
+  - {fileID: 694290914733082058, guid: 1b6f1c5d880469a42a26703c07309a82, type: 3}
+  LevelPieceTemplate: {fileID: 694290914733082058, guid: daf8a670d47bff749b3ae2207d699028, type: 3}
+  poolSize: 5
+  LR_Pool: []
+  LD_Pool: []
+  RD_Pool: []
+  UL_Pool: []
+  UR_Pool: []
+  UD_Pool: []
+  Base_Pool: []
+  piecePoolerChannelSO: {fileID: 11400000, guid: 231d05e482ad45a4b8d549b89492264f, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,8 +321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdad7bc8aa09a74e86860db9afeb3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 4
-  gridHeight: 4
+  gridWidth: 20
+  gridHeight: 20
   levelPieceWidth: 5
   levelPieceHeight: 5
   levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
@@ -269,3 +354,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelGrid: {fileID: 1389832443}
   levelPieceTemplate: {fileID: 694290914733082058, guid: daf8a670d47bff749b3ae2207d699028, type: 3}
+  piecePoolerChannelSO: {fileID: 11400000, guid: 231d05e482ad45a4b8d549b89492264f, type: 2}
+  levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}

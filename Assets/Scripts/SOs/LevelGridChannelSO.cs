@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "LevelGridChannelSO", menuName = "SpelunkyLevelMaker/LevelGridChannelSO", order = 0)]
 public class LevelGridChannelSO : ScriptableObject
@@ -11,6 +12,9 @@ public class LevelGridChannelSO : ScriptableObject
 
     public delegate int GetValueAtGridCoordinate(Vector2Int coordinate);
     public event GetValueAtGridCoordinate EGetValueAtGridCoordinate;
+
+    public delegate List<Vector2Int> GetEmptyTiles();
+    public event GetEmptyTiles EGetEmptyTiles;
 
     public Vector2 RaiseGetPositionFromGridCoordinates(Vector2Int coordinates)
     {
@@ -37,5 +41,18 @@ public class LevelGridChannelSO : ScriptableObject
         }
 
         return EGetValueAtGridCoordinate.Invoke(gridCoordinate);
+    }
+
+    public List<Vector2Int> RaiseGetEmptyTiles()
+    {
+        if (EGetEmptyTiles == null)
+        {
+            Debug.Log("No Level Grid exist to handle this function call");
+            return null;
+        }
+        else
+        {
+            return EGetEmptyTiles.Invoke();
+        }
     }
 }

@@ -1,90 +1,46 @@
 using UnityEngine;
 
-struct SurroudingData
-{
-    public bool up;
-    public bool down;
-    public bool left;
-    public bool right;
-
-    public Vector2Int GetRandomDirection()
-    {
-        if (down && left && right)
-        {
-            Debug.Log($"No possible next direction exist {up} {down} {left} {right}");
-            return Vector2Int.zero;
-        }
-
-        Vector2Int direction = Vector2Int.zero;
-
-        int rand = Random.Range(0, 3);
-
-        while (direction == Vector2Int.zero)
-        {
-            //Debug.Log($"Loop is running with rand = {rand} and directions = {up} {down} {left} {right}");
-
-            if (rand == 0 && down == false)
-            {
-                direction = new Vector2Int(0, 1);
-                break;
-            }
-            else if (rand == 0 && down == true)
-            {
-                direction = Vector2Int.zero;
-                Debug.Log("<b>Tried to go down, but it was already occupied</b>");
-                break;
-            }
-            else if (rand == 1 && left == false)
-            {
-                direction = new Vector2Int(-1, 0);
-                break;
-            }
-            else if (rand == 2 && right == false)
-            {
-                direction = new Vector2Int(1, 0);
-                break;
-            }
-            else
-            {
-                Debug.Log("Checking Other possibilities");
-                rand = (rand + 1) % 3;
-                continue;
-            }
-        }
-
-        return direction;
-    }
-}
-
 public class LevelPiece : MonoBehaviour
 {
     [SerializeField] GameObject levelPieceTemplate;
 
-    [SerializeField] LevelGridChannelSO levelGridChannelSO;
+    [SerializeField] Vector2 coordinate;
 
-    public void PlaceLevelPiece(Vector2Int coordinates, int debugValue)
+    [SerializeField] LevelGridChannelSO levelGridChannelSO;
+    [SerializeField] PiecePoolerChannelSO piecePoolerChannelSO;
+
+    public void PlaceLevelPiece(Vector2Int coordinates, int debug, GateType entryGateType)
     {
+        this.coordinate = coordinates;
+
+        // Set the Position and Update the grid
         transform.position = levelGridChannelSO.RaiseGetPositionFromGridCoordinates(coordinates);
         levelGridChannelSO.RaiseUpdateLevelGrid(coordinates, 1);
 
-        Debug.Log($"This piece was placed at {coordinates}", gameObject);
+        // Get data about the next level piece
+        SurroudingData surrData = GetSurroundingData(coordinates);
+        Vector2Int nextDirection = surrData.GetRandomDirection();
+        GateType exitGateType = GetExitGateType(nextDirection);
 
-        if (debugValue > 7)
+        // Update this empty level piece to match the entry and exit gates
+        var thisLevelPiece = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(entryGateType, exitGateType);
+        thisLevelPiece.transform.SetParent(this.transform);
+        thisLevelPiece.transform.localPosition = Vector3.zero;
+        thisLevelPiece.SetActive(true);
+
+        // Create the next level piece
+        GameObject nextLevelPiece = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(GateType.None, GateType.None);
+        LevelPiece levelPiece = nextLevelPiece.GetComponent<LevelPiece>();
+        nextLevelPiece.SetActive(true);
+        nextLevelPiece.transform.parent = null;
+
+        if (nextDirection == Vector2Int.zero)
         {
             return;
         }
 
-        var childLevelPiece = Instantiate<GameObject>(levelPieceTemplate);
-        var levelPiece = childLevelPiece.GetComponent<LevelPiece>();
-
-        SurroudingData surrData = GetSurroundingData(coordinates);
-        Vector2Int nextDirection = surrData.GetRandomDirection();
-
-        Debug.Log("NEXT Direction is " + nextDirection.ToString());
-
-        if (nextDirection == Vector2Int.zero) return;
-
-        levelPiece.PlaceLevelPiece(new Vector2Int(coordinates.x + nextDirection.x, coordinates.y + nextDirection.y), debugValue + 1);
+        // Run the same process on the next level piece
+        levelPiece.PlaceLevelPiece(new Vector2Int(coordinates.x + nextDirection.x, coordinates.y + nextDirection.y), debug + 1, GetEntryGateForNextLevelPiece(nextDirection));
     }
 
     private SurroudingData GetSurroundingData(Vector2Int coordinates)
@@ -97,5 +53,47 @@ public class LevelPiece : MonoBehaviour
         surroudingData.right = levelGridChannelSO.RaiseGetValueAtGridCoordinate(coordinates + Vector2Int.right) == 0 ? false : true;
 
         return surroudingData;
+    }
+
+    // Returns the starting gate of the next level piece based on where it was placed on the grid
+    private GateType GetEntryGateForNextLevelPiece(Vector2Int nextDirection)
+    {
+        if (nextDirection == Vector2Int.up)
+        {
+            return GateType.UP;
+        }
+        else if (nextDirection == Vector2Int.left)
+        {
+            return GateType.RIGHT;
+        }
+        else if (nextDirection == Vector2Int.right)
+        {
+            return GateType.LEFT;
+        }
+        else
+        {
+            return GateType.None;
+        }
+    }
+
+    // Returns the exit gate type based on where the next level piece is placed on the grid
+    private GateType GetExitGateType(Vector2Int nextDirection)
+    {
+        if (nextDirection == Vector2Int.up)
+        {
+            return GateType.DOWN;
+        }
+        else if (nextDirection == Vector2Int.left)
+        {
+            return GateType.LEFT;
+        }
+        else if (nextDirection == Vector2Int.right)
+        {
+            return GateType.RIGHT;
+        }
+        else
+        {
+            return GateType.None;
+        }
     }
 }
