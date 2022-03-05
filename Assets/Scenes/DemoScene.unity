@@ -321,8 +321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdad7bc8aa09a74e86860db9afeb3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 20
-  gridHeight: 20
+  gridWidth: 5
+  gridHeight: 5
   levelPieceWidth: 5
   levelPieceHeight: 5
   levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
@@ -354,5 +354,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelGrid: {fileID: 1389832443}
   levelPieceTemplate: {fileID: 694290914733082058, guid: daf8a670d47bff749b3ae2207d699028, type: 3}
+  completeGeneration: 1
   piecePoolerChannelSO: {fileID: 11400000, guid: 231d05e482ad45a4b8d549b89492264f, type: 2}
   levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}

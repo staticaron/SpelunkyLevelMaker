@@ -6,6 +6,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] LevelGrid levelGrid;
     [SerializeField] GameObject levelPieceTemplate;
 
+    [Tooltip("If true, new tile will generate untill no new placement is possible")]
+    [SerializeField] bool completeGeneration;
+
     //SOs
     [SerializeField] PiecePoolerChannelSO piecePoolerChannelSO;
     [SerializeField] LevelGridChannelSO levelGridChannelSO;
@@ -19,7 +22,7 @@ public class LevelGenerator : MonoBehaviour
     private void GenerateLevel()
     {
         GenerateRandomPath();
-        PopulateEmptyTiles();
+        //PopulateEmptyTiles();
     }
 
     private void GenerateRandomPath()
@@ -30,7 +33,7 @@ public class LevelGenerator : MonoBehaviour
         levelPieceGO.SetActive(true);
 
         //Place first object and start the cycle
-        levelPiece.PlaceLevelPiece(Vector2Int.zero, 0, GateType.LEFT);
+        levelPiece.PlaceLevelPiece(Vector2Int.zero, GateType.LEFT, completeGeneration);
     }
 
     private void PopulateEmptyTiles()
