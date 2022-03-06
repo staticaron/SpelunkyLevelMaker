@@ -22,11 +22,30 @@ public class LevelPiece : MonoBehaviour
         Vector2Int nextDirection = surrData.GetRandomDirection(completeGeneration);
         GateType exitGateType = GetExitGateType(nextDirection);
 
-        // Update this empty level piece to match the entry and exit gates
-        var thisLevelPiece = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(entryGateType, exitGateType);
-        thisLevelPiece.transform.SetParent(this.transform);
-        thisLevelPiece.transform.localPosition = Vector3.zero;
-        thisLevelPiece.SetActive(true);
+        if (entryGateType == GateType.None)
+        {
+            // Update this empty level piece to match the entry and exit gates
+            var thisLevelPiece = piecePoolerChannelSO.RaiseGetTerminalLevelPiece(exitGateType, true);
+            thisLevelPiece.transform.SetParent(this.transform);
+            thisLevelPiece.transform.localPosition = Vector3.zero;
+            thisLevelPiece.SetActive(true);
+        }
+        else if (exitGateType == GateType.None)
+        {
+            // Update this empty level piece to match the entry and exit gates
+            var thisLevelPiece = piecePoolerChannelSO.RaiseGetTerminalLevelPiece(entryGateType, false);
+            thisLevelPiece.transform.SetParent(this.transform);
+            thisLevelPiece.transform.localPosition = Vector3.zero;
+            thisLevelPiece.SetActive(true);
+        }
+        else
+        {
+            // Update this empty level piece to match the entry and exit gates
+            var thisLevelPiece = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(entryGateType, exitGateType);
+            thisLevelPiece.transform.SetParent(this.transform);
+            thisLevelPiece.transform.localPosition = Vector3.zero;
+            thisLevelPiece.SetActive(true);
+        }
 
         // Create the next level piece
         GameObject nextLevelPiece = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(GateType.None, GateType.None);

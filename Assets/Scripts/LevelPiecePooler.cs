@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class LevelPiecePooler : MonoBehaviour
 {
+    [Header("Level Pieces for Main path")]
     [SerializeField] GameObject[] LevelPieces_LR;
     [SerializeField] GameObject[] LevelPieces_LD;
     [SerializeField] GameObject[] LevelPieces_RD;
@@ -10,10 +11,21 @@ public class LevelPiecePooler : MonoBehaviour
     [SerializeField] GameObject[] LevelPieces_UR;
     [SerializeField] GameObject[] LevelPieces_UD;
 
+    [Header("Level Pieces for Starting Tile")]
+    [SerializeField] GameObject[] StartingLevelPieces_Down;
+    [SerializeField] GameObject[] StartingLevelPieces_Left;
+    [SerializeField] GameObject[] StartingLevelPieces_Right;
+
+    [Header("Level Pieces for Ending Tile")]
+    [SerializeField] GameObject[] EndingLevelPieces_Up;
+    [SerializeField] GameObject[] EndingLevelPieces_Left;
+    [SerializeField] GameObject[] EndingLevelPieces_Right;
+
     public GameObject LevelPieceTemplate;
 
     [SerializeField] int poolSize = 3;
 
+    [Header("Pool for path level pieces")]
     [SerializeField] List<GameObject> LR_Pool;
     [SerializeField] List<GameObject> LD_Pool;
     [SerializeField] List<GameObject> RD_Pool;
@@ -42,32 +54,27 @@ public class LevelPiecePooler : MonoBehaviour
     {
         piecePoolerChannelSO.ERequestPoolObjectFromGates += RequestObjectFromPool;
         piecePoolerChannelSO.EGetRandomPoolObject += GetRandomObjectFromPool;
+        piecePoolerChannelSO.EGetTerminalLevelPiece += GetTerminalLevelPiece;
     }
 
     private void OnDisable()
     {
         piecePoolerChannelSO.ERequestPoolObjectFromGates -= RequestObjectFromPool;
         piecePoolerChannelSO.EGetRandomPoolObject -= GetRandomObjectFromPool;
+        piecePoolerChannelSO.EGetTerminalLevelPiece -= GetTerminalLevelPiece;
     }
 
     [ContextMenu("Generate Pool")]
     private void GeneratePool()
     {
-        for (int i = 0; i < poolSize * 3; i++)
-        {
-            GameObject instance = Instantiate<GameObject>(LevelPieceTemplate);
-            instance.SetActive(false);
-            instance.transform.SetParent(this.transform);
+        GeneratePool(new GameObject[] { LevelPieceTemplate }, ref Base_Pool, poolSize);
+        GeneratePool(LevelPieces_LR, ref LR_Pool, poolSize);
+        GeneratePool(LevelPieces_LD, ref LD_Pool, poolSize);
+        GeneratePool(LevelPieces_RD, ref RD_Pool, poolSize);
+        GeneratePool(LevelPieces_UD, ref UD_Pool, poolSize);
+        GeneratePool(LevelPieces_UL, ref UL_Pool, poolSize);
+        GeneratePool(LevelPieces_UR, ref UR_Pool, poolSize);
 
-            Base_Pool.Add(instance);
-        }
-
-        GeneratePool(LevelPieces_LR, ref LR_Pool);
-        GeneratePool(LevelPieces_LD, ref LD_Pool);
-        GeneratePool(LevelPieces_RD, ref RD_Pool);
-        GeneratePool(LevelPieces_UD, ref UD_Pool);
-        GeneratePool(LevelPieces_UL, ref UL_Pool);
-        GeneratePool(LevelPieces_UR, ref UR_Pool);
     }
 
     [ContextMenu("Check Names")]
@@ -85,9 +92,9 @@ public class LevelPiecePooler : MonoBehaviour
     }
 
     // Generate a pool for the passed level pieces stored at the passed poolObject
-    private void GeneratePool(GameObject[] levelPieces, ref List<GameObject> poolObject)
+    private void GeneratePool(GameObject[] levelPieces, ref List<GameObject> poolObject, int amount)
     {
-        for (int i = 0; i < poolSize; i++)
+        for (int i = 0; i < amount; i++)
         {
             int rand = Random.Range(0, levelPieces.Length);
             GameObject instance = Instantiate(levelPieces[rand]);
@@ -97,8 +104,41 @@ public class LevelPiecePooler : MonoBehaviour
         }
     }
 
+    private GameObject GetTerminalLevelPiece(GateType endingGate, bool isStarting = true)
+    {
+        if (isStarting)
+        {
+            switch (endingGate)
+            {
+                case GateType.DOWN:
+                    return GetRandomLevelPieceFromList(StartingLevelPieces_Down);
+                case GateType.LEFT:
+                    return GetRandomLevelPieceFromList(StartingLevelPieces_Left);
+                case GateType.RIGHT:
+                    return GetRandomLevelPieceFromList(StartingLevelPieces_Right);
+                default:
+                    return GetGameObjectFromType("");
+            }
+        }
+        else
+        {
+            switch (endingGate)
+            {
+                case GateType.UP:
+                    return GetRandomLevelPieceFromList(EndingLevelPieces_Up);
+                case GateType.LEFT:
+                    return GetRandomLevelPieceFromList(EndingLevelPieces_Left);
+                case GateType.RIGHT:
+                    return GetRandomLevelPieceFromList(EndingLevelPieces_Right);
+                default:
+                    print($"Returning Empty cz {endingGate.ToString()}");
+                    return GetGameObjectFromType("");
+            }
+        }
+    }
+
     //Returns a disabled level piece that matches the starting and ending gate
-    public GameObject RequestObjectFromPool(GateType startingGame, GateType endingGate)
+    private GameObject RequestObjectFromPool(GateType startingGame, GateType endingGate)
     {
         if (endingGate == GateType.None) endingGate = GateType.DOWN;
 
@@ -178,6 +218,18 @@ public class LevelPiecePooler : MonoBehaviour
             default:
                 return GetGameObjectFromType("");
         }
+    }
+
+    // Returns the terminal level pieces
+    private GameObject GetRandomLevelPieceFromList(GameObject[] arrayToSearch)
+    {
+        int rand = Random.Range(0, arrayToSearch.Length);
+
+        GameObject g = Instantiate<GameObject>(arrayToSearch[rand]);
+        g.SetActive(false);
+        g.transform.SetParent(this.transform);
+
+        return g;
     }
 
     // Returns the level piece according to thier type
@@ -275,9 +327,19 @@ public class LevelPiecePooler : MonoBehaviour
 
                 return instance_UD;
             default:
+                foreach (GameObject g in Base_Pool)
+                {
+                    if (!g.activeInHierarchy)
+                    {
+                        return g;
+                    }
+                }
+
                 GameObject instance = Instantiate(LevelPieceTemplate);
                 instance.SetActive(false);
                 instance.transform.SetParent(this.transform);
+                Base_Pool.Add(instance);
+
                 return instance;
         }
     }

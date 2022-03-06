@@ -22,7 +22,7 @@ public class LevelGenerator : MonoBehaviour
     private void GenerateLevel()
     {
         GenerateRandomPath();
-        //PopulateEmptyTiles();
+        PopulateEmptyTiles();
     }
 
     private void GenerateRandomPath()
@@ -33,7 +33,7 @@ public class LevelGenerator : MonoBehaviour
         levelPieceGO.SetActive(true);
 
         //Place first object and start the cycle
-        levelPiece.PlaceLevelPiece(Vector2Int.zero, GateType.LEFT, completeGeneration);
+        levelPiece.PlaceLevelPiece(Vector2Int.zero, GateType.None, completeGeneration);
     }
 
     private void PopulateEmptyTiles()
