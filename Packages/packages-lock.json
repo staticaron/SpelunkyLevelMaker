@@ -49,6 +49,12 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.inputsystem": {
+      "version": "file:C:/Users/DevGa_me/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.inputsystem@1.0.2",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.mathematics": {
       "version": "1.1.0",
       "depth": 1,
