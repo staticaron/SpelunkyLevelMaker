@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour
 {
+    // Delegates and events
+    public delegate void LevelGenerated(Vector2Int endingCoordinates);
+    public static event LevelGenerated ELevelGenerated;
+
     [SerializeField] LevelGrid levelGrid;
     [SerializeField] GameObject levelPieceTemplate;
 
@@ -21,19 +25,24 @@ public class LevelGenerator : MonoBehaviour
     [ContextMenu("Generate Level")]
     private void GenerateLevel()
     {
-        GenerateRandomPath();
+        Vector2Int startingCoordinates = GenerateRandomPath();
         PopulateEmptyTiles();
+
+        ELevelGenerated?.Invoke(startingCoordinates);
     }
 
-    private void GenerateRandomPath()
+    private Vector2Int GenerateRandomPath()
     {
         GameObject levelPieceGO = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(GateType.None, GateType.None);
         LevelPiece levelPiece = levelPieceGO.GetComponent<LevelPiece>();
         levelPieceGO.transform.parent = null;
         levelPieceGO.SetActive(true);
+        Vector2Int randomTopTileCoordinates = levelGridChannelSO.RaiseGetRandomTopTile();
 
         //Place first object and start the cycle
-        levelPiece.PlaceLevelPiece(levelGridChannelSO.RaiseGetRandomTopTile(), GateType.None, completeGeneration);
+        levelPiece.PlaceLevelPiece(randomTopTileCoordinates, GateType.None, completeGeneration);
+
+        return randomTopTileCoordinates;
     }
 
     private void PopulateEmptyTiles()
