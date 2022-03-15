@@ -17,9 +17,12 @@ public class PlayerSpawner : MonoBehaviour
         LevelGenerator.ELevelGenerated -= SpawnPlayer;
     }
 
-    private void SpawnPlayer(Vector2Int endingCoordinates)
+    private void SpawnPlayer(Vector2Int startingCoordinates, Vector2Int endingCoordinates)
     {
-        GameObject player = Instantiate<GameObject>(playerObject, new Vector3(endingCoordinates.x * 20 + buffer.x, (endingCoordinates.y * 20 + buffer.y) * -1, 0), Quaternion.identity);
+        Debug.Log($"Starting Coordinates are : {startingCoordinates}");
+        Debug.Log($"Ending Coordinates are : {endingCoordinates}");
+
+        GameObject player = Instantiate<GameObject>(playerObject, new Vector3(startingCoordinates.x * 20 + buffer.x, (startingCoordinates.y * 20 + buffer.y) * -1, 0), Quaternion.identity);
         cameraController.target = player.transform;
     }
 }
