@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -25,17 +26,20 @@ public class LevelGenerator : MonoBehaviour
     [ContextMenu("Generate Level")]
     private void GenerateLevel()
     {
-        Vector2Int startingCoordinates = GenerateRandomPath();
-        PopulateEmptyTiles();
+        Vector2Int startingCoordinates = GenerateRandomPath();  // Generate Random Continous Path
+        PopulateEmptyTiles();                                   // Place empty tiles with random tiles
+        PopulateHurdles();                                      // Place Surrounding Hurdles
 
+        // Level Generated, do other tasks
         ELevelGenerated?.Invoke(startingCoordinates);
+
     }
 
     private Vector2Int GenerateRandomPath()
     {
         GameObject levelPieceGO = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(GateType.None, GateType.None);
         LevelPiece levelPiece = levelPieceGO.GetComponent<LevelPiece>();
-        levelPieceGO.transform.parent = null;
+        levelPieceGO.transform.SetParent(transform);
         levelPieceGO.SetActive(true);
         Vector2Int randomTopTileCoordinates = levelGridChannelSO.RaiseGetRandomTopTile();
 
@@ -54,6 +58,18 @@ public class LevelGenerator : MonoBehaviour
             GameObject randLevelPiece = piecePoolerChannelSO.RaiseGetRandomPoolObject();
             randLevelPiece.transform.position = levelGridChannelSO.RaiseGetPositionFromGridCoordinates(coordinate);
             randLevelPiece.SetActive(true);
+        }
+    }
+
+    private void PopulateHurdles()
+    {
+        List<Vector2Int> surroundingTileCoordinates = levelGridChannelSO.RaiseGetSurroundingTiles();
+
+        foreach (Vector2Int coordinate in surroundingTileCoordinates)
+        {
+            GameObject pooledHurdle = piecePoolerChannelSO.RaiseRequestPooledObjectFromType("Hurdle");
+            pooledHurdle.transform.position = levelGridChannelSO.RaiseGetPositionFromGridCoordinates(coordinate);
+            pooledHurdle.SetActive(true);
         }
     }
 }

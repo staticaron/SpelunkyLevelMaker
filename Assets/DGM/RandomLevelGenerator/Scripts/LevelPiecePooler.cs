@@ -21,7 +21,9 @@ public class LevelPiecePooler : MonoBehaviour
     [SerializeField] GameObject[] EndingLevelPieces_Left;
     [SerializeField] GameObject[] EndingLevelPieces_Right;
 
+    [Header("Misc. Level Piece GOs")]
     public GameObject LevelPieceTemplate;
+    public GameObject Hurdle;
 
     [SerializeField] int poolSize = 3;
 
@@ -33,6 +35,7 @@ public class LevelPiecePooler : MonoBehaviour
     [SerializeField] List<GameObject> UR_Pool;
     [SerializeField] List<GameObject> UD_Pool;
     [SerializeField] List<GameObject> Base_Pool;
+    [SerializeField] List<GameObject> Hurdles_Pool;
 
     //SOs
     [SerializeField] PiecePoolerChannelSO piecePoolerChannelSO;
@@ -46,6 +49,7 @@ public class LevelPiecePooler : MonoBehaviour
         UR_Pool = new List<GameObject>();
         UD_Pool = new List<GameObject>();
         Base_Pool = new List<GameObject>();
+        Hurdles_Pool = new List<GameObject>();
 
         GeneratePool();
     }
@@ -53,6 +57,7 @@ public class LevelPiecePooler : MonoBehaviour
     private void OnEnable()
     {
         piecePoolerChannelSO.ERequestPoolObjectFromGates += RequestObjectFromPool;
+        piecePoolerChannelSO.ERequestsLevelPieceFromType += GetGameObjectFromType;
         piecePoolerChannelSO.EGetRandomPoolObject += GetRandomObjectFromPool;
         piecePoolerChannelSO.EGetTerminalLevelPiece += GetTerminalLevelPiece;
     }
@@ -60,6 +65,7 @@ public class LevelPiecePooler : MonoBehaviour
     private void OnDisable()
     {
         piecePoolerChannelSO.ERequestPoolObjectFromGates -= RequestObjectFromPool;
+        piecePoolerChannelSO.ERequestsLevelPieceFromType -= GetGameObjectFromType;
         piecePoolerChannelSO.EGetRandomPoolObject -= GetRandomObjectFromPool;
         piecePoolerChannelSO.EGetTerminalLevelPiece -= GetTerminalLevelPiece;
     }
@@ -68,6 +74,8 @@ public class LevelPiecePooler : MonoBehaviour
     private void GeneratePool()
     {
         GeneratePool(new GameObject[] { LevelPieceTemplate }, ref Base_Pool, poolSize);
+        GeneratePool(new GameObject[] { Hurdle }, ref Hurdles_Pool, poolSize);
+
         GeneratePool(LevelPieces_LR, ref LR_Pool, poolSize);
         GeneratePool(LevelPieces_LD, ref LD_Pool, poolSize);
         GeneratePool(LevelPieces_RD, ref RD_Pool, poolSize);
@@ -326,6 +334,21 @@ public class LevelPiecePooler : MonoBehaviour
                 UD_Pool.Add(instance_UD);
 
                 return instance_UD;
+            case "Hurdle":
+                foreach (GameObject g in Hurdles_Pool)
+                {
+                    if (!g.activeInHierarchy)
+                    {
+                        return g;
+                    }
+                }
+
+                GameObject instance_Hurdle = Instantiate(Hurdle);
+                instance_Hurdle.SetActive(false);
+                instance_Hurdle.transform.SetParent(transform);
+                Hurdles_Pool.Add(instance_Hurdle);
+
+                return instance_Hurdle;
             default:
                 foreach (GameObject g in Base_Pool)
                 {

@@ -12,6 +12,9 @@ public class PiecePoolerChannelSO : ScriptableObject
     public delegate GameObject GetTerminalLevelPiece(GateType endingGate, bool isStarting);
     public event GetTerminalLevelPiece EGetTerminalLevelPiece;
 
+    public delegate GameObject GetLevelPieceFromType(string type);
+    public event GetLevelPieceFromType ERequestsLevelPieceFromType;
+
     public GameObject RaiseRequestPoolObjectFromGates(GateType startingGate, GateType endingGate)
     {
         if (ERequestPoolObjectFromGates == null)
@@ -48,6 +51,19 @@ public class PiecePoolerChannelSO : ScriptableObject
         else
         {
             return EGetTerminalLevelPiece(endingGate, isStarting);
+        }
+    }
+
+    public GameObject RaiseRequestPooledObjectFromType(string type)
+    {
+        if (ERequestsLevelPieceFromType == null)
+        {
+            Debug.Log("Piece Pooler doesn't exist to handle this function call");
+            return null;
+        }
+        else
+        {
+            return ERequestsLevelPieceFromType(type);
         }
     }
 }

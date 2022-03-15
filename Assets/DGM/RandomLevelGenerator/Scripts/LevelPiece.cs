@@ -51,7 +51,7 @@ public class LevelPiece : MonoBehaviour
         GameObject nextLevelPiece = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(GateType.None, GateType.None);
         LevelPiece levelPiece = nextLevelPiece.GetComponent<LevelPiece>();
         nextLevelPiece.SetActive(true);
-        nextLevelPiece.transform.parent = null;
+        nextLevelPiece.transform.parent = transform.parent;
 
         if (nextDirection == Vector2Int.zero)
         {

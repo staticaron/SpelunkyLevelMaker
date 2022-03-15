@@ -19,6 +19,9 @@ public class LevelGridChannelSO : ScriptableObject
     public delegate Vector2Int GetRandomTopTile();
     public event GetRandomTopTile EGetRandomTopTile;
 
+    public delegate List<Vector2Int> GetSurroundingTiles();
+    public event GetSurroundingTiles EGetSurroundingTiles;
+
     public Vector2 RaiseGetPositionFromGridCoordinates(Vector2Int coordinates)
     {
         if (EGetPositionFromGridCoordinates == null)
@@ -69,6 +72,19 @@ public class LevelGridChannelSO : ScriptableObject
         else
         {
             return EGetRandomTopTile();
+        }
+    }
+
+    public List<Vector2Int> RaiseGetSurroundingTiles()
+    {
+        if (EGetSurroundingTiles == null)
+        {
+            Debug.Log("No Level Grid exist to handle this function call");
+            return new List<Vector2Int>();
+        }
+        else
+        {
+            return EGetSurroundingTiles.Invoke();
         }
     }
 }

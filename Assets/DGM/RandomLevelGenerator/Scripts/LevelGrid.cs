@@ -25,6 +25,7 @@ public class LevelGrid : MonoBehaviour
         levelGridChannelSO.EGetValueAtGridCoordinate += GetValueAtCoordinates;
         levelGridChannelSO.EGetEmptyTiles += GetEmptyTiles;
         levelGridChannelSO.EGetRandomTopTile += GetRandomTileFromTop;
+        levelGridChannelSO.EGetSurroundingTiles += GetSurroundingTiles;
     }
 
     private void OnDisable()
@@ -34,6 +35,7 @@ public class LevelGrid : MonoBehaviour
         levelGridChannelSO.EGetValueAtGridCoordinate -= GetValueAtCoordinates;
         levelGridChannelSO.EGetEmptyTiles -= GetEmptyTiles;
         levelGridChannelSO.EGetRandomTopTile -= GetRandomTileFromTop;
+        levelGridChannelSO.EGetSurroundingTiles -= GetSurroundingTiles;
     }
 
     [ContextMenu("Print Grid")]
@@ -98,5 +100,29 @@ public class LevelGrid : MonoBehaviour
     private Vector2Int GetRandomTileFromTop()
     {
         return new Vector2Int(Random.Range(0, gridWidth), 0);
+    }
+
+    private List<Vector2Int> GetSurroundingTiles()
+    {
+        var coordinates = new List<Vector2Int>();
+
+        int minXCoordinate = -1;
+        int maxXCoordinate = gridWidth;
+        int minYCoordinate = -1;
+        int maxYCoordinate = gridHeight;
+
+        for (int row = -1; row < gridWidth + 1; row++)
+        {
+            coordinates.Add(new Vector2Int(row, minYCoordinate));
+            coordinates.Add(new Vector2Int(row, maxYCoordinate));
+        }
+
+        for (int col = 0; col < gridHeight; col++)
+        {
+            coordinates.Add(new Vector2Int(minXCoordinate, col));
+            coordinates.Add(new Vector2Int(maxXCoordinate, col));
+        }
+
+        return coordinates;
     }
 }
