@@ -4,6 +4,7 @@
     "com.unity.2d.pixel-perfect": "4.0.1",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
+    "com.unity.2d.tilemap.extras": "1.8.1-preview",
     "com.unity.ide.vscode": "1.2.3",
     "com.unity.inputsystem": "file:C:/Users/DevGa_me/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.inputsystem@1.0.2",
     "com.unity.textmeshpro": "3.0.4",
