@@ -5,20 +5,14 @@ using System;
 public class LevelGenerator : MonoBehaviour
 {
     // Delegates and events
-    public delegate void LevelGenerated(Vector2Int startingCoordinates, Vector2Int endingCoordinates);
+    public delegate void LevelGenerated(Vector2Int endingCoordinates);
     public static event LevelGenerated ELevelGenerated;
 
     [SerializeField] LevelGrid levelGrid;
     [SerializeField] GameObject levelPieceTemplate;
 
     [Tooltip("If true, new tile will generate untill no new placement is possible")]
-    [SerializeField] bool completeGeneration = false;
-
-    [Tooltip("If true, Random Tiles will be populated in the empty spaces of the grid")]
-    [SerializeField] bool populateEmptySpace = true;
-
-    [Tooltip("If true, Hudles will generate at the edges of the map")]
-    [SerializeField] bool populateHurdles = true;
+    [SerializeField] bool completeGeneration;
 
     //SOs
     [SerializeField] PiecePoolerChannelSO piecePoolerChannelSO;
@@ -32,26 +26,27 @@ public class LevelGenerator : MonoBehaviour
     [ContextMenu("Generate Level")]
     private void GenerateLevel()
     {
-        Vector2Int startingCoordinates = levelGridChannelSO.RaiseGetRandomTopTile();
-
-        Vector2Int endingCoordinates = GenerateRandomPath(startingCoordinates);     // Generate Random Continous Path
-        if (populateEmptySpace) PopulateEmptyTiles();                               // Place empty tiles with random tiles
-        if (populateHurdles) PopulateHurdles();                                     // Place Surrounding Hurdles
+        Vector2Int startingCoordinates = GenerateRandomPath();  // Generate Random Continous Path
+        PopulateEmptyTiles();                                   // Place empty tiles with random tiles
+        PopulateHurdles();                                      // Place Surrounding Hurdles
 
         // Level Generated, do other tasks
-        ELevelGenerated?.Invoke(startingCoordinates, endingCoordinates);
+        ELevelGenerated?.Invoke(startingCoordinates);
 
     }
 
-    private Vector2Int GenerateRandomPath(Vector2Int startingCoordinate)
+    private Vector2Int GenerateRandomPath()
     {
         GameObject levelPieceGO = piecePoolerChannelSO.RaiseRequestPoolObjectFromGates(GateType.None, GateType.None);
         LevelPiece levelPiece = levelPieceGO.GetComponent<LevelPiece>();
         levelPieceGO.transform.SetParent(transform);
         levelPieceGO.SetActive(true);
+        Vector2Int randomTopTileCoordinates = levelGridChannelSO.RaiseGetRandomTopTile();
 
         //Place first object and start the cycle
-        return levelPiece.PlaceLevelPiece(startingCoordinate, GateType.None, completeGeneration);
+        levelPiece.PlaceLevelPiece(randomTopTileCoordinates, GateType.None, completeGeneration);
+
+        return randomTopTileCoordinates;
     }
 
     private void PopulateEmptyTiles()
