@@ -20,7 +20,7 @@ public class SurroudingData
 
         while (direction == Vector2Int.zero)
         {
-            if (rand == 0 && down == false && completeGeneration == true)
+            if (rand == 0 && down == false)
             {
                 direction = new Vector2Int(0, 1);
                 break;

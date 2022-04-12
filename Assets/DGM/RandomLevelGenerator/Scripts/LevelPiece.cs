@@ -9,7 +9,7 @@ public class LevelPiece : MonoBehaviour
     [SerializeField] LevelGridChannelSO levelGridChannelSO;
     [SerializeField] PiecePoolerChannelSO piecePoolerChannelSO;
 
-    public void PlaceLevelPiece(Vector2Int coordinates, GateType entryGateType, bool completeGeneration)
+    public Vector2Int PlaceLevelPiece(Vector2Int coordinates, GateType entryGateType, bool completeGeneration)
     {
         this.coordinate = coordinates;
 
@@ -55,11 +55,11 @@ public class LevelPiece : MonoBehaviour
 
         if (nextDirection == Vector2Int.zero)
         {
-            return;
+            return coordinates;
         }
 
         // Run the same process on the next level piece
-        levelPiece.PlaceLevelPiece(new Vector2Int(coordinates.x + nextDirection.x, coordinates.y + nextDirection.y), GetEntryGateForNextLevelPiece(nextDirection), completeGeneration);
+        return levelPiece.PlaceLevelPiece(new Vector2Int(coordinates.x + nextDirection.x, coordinates.y + nextDirection.y), GetEntryGateForNextLevelPiece(nextDirection), completeGeneration);
     }
 
     private SurroudingData GetSurroundingData(Vector2Int coordinates)
