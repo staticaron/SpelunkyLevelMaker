@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6852560676598204430}
-  - component: {fileID: 6852560676598204433}
+  - component: {fileID: 4926004900451432160}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 6852560677537173526}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6852560676598204433
+--- !u!114 &4926004900451432160
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,9 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c976b898caf50842aa279189c47e51f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 4327160912582216259, guid: 66c59d7e16a7c134ba59a230461037d8, type: 3}
+  playerObject: {fileID: 6002803792507394909, guid: cb8c16eb77d5556439913d79d9b03b77, type: 3}
   buffer: {x: 10, y: 10}
-  cameraController: {fileID: 0}
 --- !u!1 &6852560677171246468
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +109,8 @@ MonoBehaviour:
   levelGrid: {fileID: 6852560677171246469}
   levelPieceTemplate: {fileID: 694290914733082058, guid: daf8a670d47bff749b3ae2207d699028, type: 3}
   completeGeneration: 0
+  populateEmptySpace: 1
+  populateHurdles: 1
   piecePoolerChannelSO: {fileID: 11400000, guid: 231d05e482ad45a4b8d549b89492264f, type: 2}
   levelGridChannelSO: {fileID: 11400000, guid: 266849f71256d234ba397db9b6ebb84c, type: 2}
 --- !u!1 &6852560677537173529
