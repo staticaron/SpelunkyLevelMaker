@@ -28,7 +28,6 @@ public class SurroudingData
             else if (rand == 0 && down == true && completeGeneration == false)
             {
                 direction = Vector2Int.zero;
-                Debug.Log("<b>Tried to go down, but it was already occupied</b>");
                 break;
             }
             else if (rand == 1 && left == false)
