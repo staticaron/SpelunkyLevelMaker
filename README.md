@@ -13,6 +13,8 @@ This level maker works recursively. Each Level Piece placed is responsible for p
 * From the available empty tiles, select a random tile and place next Level Piece there.
 * Update the former Level Piece according to the later one.
 
+**Note :** The level pieces are pre made and the level generator randomly picks from those premade level pieces. If more variety is there in level pieces, more _**random**_ levels will be generated. 
+
 **Components** : 
 * Da Grid : Grid is responsible for keeping track of whether a tile is empty or not. New Level Pieces are only placed on empty tiles. 
 * Level Generator : Level Generator is responsible for spawning the first level piece, spawning the hurdles and populating the other Level Pieces that are not the continuous path.
